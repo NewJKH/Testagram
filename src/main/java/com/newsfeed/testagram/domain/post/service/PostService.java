@@ -74,9 +74,12 @@ public class PostService {
 
     //단건 조회기능
 
-    public PostDetailResponseDto findById(Long id) {
+    public PostDetailResponseDto findById(Long memberId) {
+        Member user = memberRepository.findById(memberId)
+                .orElseThrow(MemberNotFoundException::new);
+
         //데이터 조회
-        Optional<Post> findPost = postRepository.findById(id);
+        Optional<Post> findPost = postRepository.findById(memberId);
         //responseDto 만들기
         if (findPost.isPresent()) {
             Post post = findPost.get();
